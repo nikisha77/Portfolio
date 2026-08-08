@@ -484,19 +484,7 @@ const SITE = {
     pdfPath: "assets/resume.pdf"
   },
 
-  // Newsletter signup → EmailOctopus.
-  // Fill in apiKey + listId and every signup lands straight in that
-  // EmailOctopus list — nothing else to configure.
-  //
-  // Where to find them: EmailOctopus dashboard → Settings → API (for the
-  // key) → your list → Settings (for the list ID).
-  //
-  // Security note: this is a static site with no server, so an apiKey
-  // pasted below is visible to anyone who views your page source. Fine for
-  // a low-stakes signup form; if you'd rather not expose it, set "endpoint"
-  // instead to a small serverless function (Cloudflare Worker / Netlify
-  // Function) that holds the real key and forwards requests to EmailOctopus
-  // — then leave apiKey blank.
+ 
   newsletter: {
     apiKey: APIKEY,
     listId: LISTID,
@@ -512,19 +500,7 @@ const SITE = {
       { label:"Kaggle",  short:"Kaggle", url:"https://www.kaggle.com/kaisudo" }
   ],
 
-  // Contact form → Web3Forms.
-  // This is deliberately NOT EmailOctopus: EmailOctopus is a mailing-list
-  // tool, so a message sent through it would only become a "contact" in a
-  // list, not an email in your inbox. Web3Forms exists specifically to take
-  // a form submission and email it straight to one address — a much better
-  // fit for "send a message, get a reply."
-  //
-  // Setup (2 minutes, no account needed):
-  //  1. Go to web3forms.com → enter knikisha77@gmail.com → they instantly
-  //     email you an Access Key.
-  //  2. Paste that key below. Every submission is then relayed straight to
-  //     knikisha77@gmail.com, with the sender's address set as reply-to so
-  //     you can just hit Reply.
+
   contact: {
     web3formsAccessKey: WEB3FORMSACCESSKEY
   },
@@ -710,9 +686,7 @@ async function loadDevToPosts(){
     if (!Array.isArray(posts) || posts.length === 0) throw new Error("No posts returned");
 
     const cards = posts.map((p, i) => ({
-      // dev.to always returns a social_image (auto-generated if the author
-      // didn't set a cover_image), so real posts get a real image instead
-      // of the emoji tile — that only shows up if both are ever missing.
+
       image: p.cover_image || p.social_image || null,
       emoji: emojis[i % emojis.length],
       color: palette[i % palette.length],
@@ -732,11 +706,7 @@ async function loadDevToPosts(){
   }
 }
 
-// ---- Contact form: Web3Forms ----
-// (Not EmailOctopus — EmailOctopus is a mailing-list tool, so it would only
-// add the sender as a "contact" with no way to deliver the message to your
-// inbox on its own. Web3Forms is built specifically to relay a form
-// submission straight to one email address, no server required.)
+
 async function submitContactMessage(email, message){
   const cfg = SITE.contact;
   if (!cfg.web3formsAccessKey) throw new Error("not configured");
@@ -799,12 +769,6 @@ function setupContactForm(){
   });
 }
 
-// ---- Devlog: pull in entries synced from Google Tasks ----
-// devlog-google.json is written by a scheduled GitHub Action
-// (.github/workflows/sync-devlog.yml, running scripts/sync-google-tasks.mjs)
-// — never generated in the browser, so there's nothing to click or connect
-// on the public site. Hand-written SITE.devlog entries always win if a date
-// has both, so you can override or annotate any auto-synced day.
 async function loadGoogleDevlog(){
   try{
     const res = await fetch("devlog-google.json", { cache: "no-store" });
@@ -953,7 +917,7 @@ function setupResumeModal(){
   overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
 }
 
-// ---- interactive dog mascot ----
+
 // ---- newsletter form ----
 function setupNewsletter(){
   const form = document.getElementById("newsletterForm");
