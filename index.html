@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nikisha AI/ML Developer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   TOKENS — change these to re-theme the whole site
+   ========================================================= */
+:root{
+  --cream:#F6EFDC;
+  --paper:#FFFBF1;
+  --ink:#221F1A;
+  --red:#C1443A;
+  --blue:#6FA3C4;
+  --mustard:#E2A73B;
+  --green:#7C9A5C;
+  --muted:#8A8172;
+
+  --font-display:'Baloo 2', system-ui, sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+  --font-hand:'Caveat', cursive;
+  --font-mono:'JetBrains Mono', monospace;
+
+  --shadow-hard: 5px 5px 0 var(--ink);
+  --shadow-hard-sm: 3px 3px 0 var(--ink);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.55;
+  background-image:radial-gradient(circle, rgba(34,31,26,0.07) 1px, transparent 1px);
+  background-size:16px 16px;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;}
+.container{max-width:1080px;margin:0 auto;padding:0 28px;}
+h1,h2,h3{font-family:var(--font-display);margin:0;line-height:1.05;}
+.eyebrow{
+  font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.14em;
+  font-size:12.5px;color:var(--red);display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:"";width:18px;height:2px;background:var(--red);display:inline-block;}
+.hand{font-family:var(--font-hand);}
+section{padding:96px 0;position:relative;}
+@media(max-width:640px){ section{padding:64px 0;} .container{padding:0 20px;} }
+
+a:focus-visible, button:focus-visible, .day:focus-visible{
+  outline:3px solid var(--red);outline-offset:3px;border-radius:6px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+
+/* ============ NAV ============ */
+.nav{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:2.5px solid var(--ink);}
+.nav-inner{max-width:1080px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:19px;text-decoration:none;}
+.brand svg{width:34px;height:34px;}
+.nav-right{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.nav-links{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-family:var(--font-mono);font-size:13px;text-transform:uppercase;letter-spacing:.06em;}
+.nav-links a{text-decoration:none;position:relative;padding-bottom:3px;}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--red);transition:width .2s ease;}
+.nav-links a:hover::after{width:100%;}
+.social-icons{display:flex;gap:8px;}
+.icon-badge{
+  width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);
+  font-size:10.5px;font-weight:700;text-decoration:none;background:var(--cream);
+  box-shadow:2px 2px 0 var(--ink); transition:transform .12s ease;
+}
+.icon-badge:hover{transform:translate(-1px,-1px);}
+.resume-btn{
+  font-family:var(--font-mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;
+  padding:9px 16px;border:2px solid var(--ink);border-radius:999px;background:var(--red);color:var(--paper);
+  cursor:pointer;box-shadow:2px 2px 0 var(--ink);transition:transform .12s ease;
+}
+.resume-btn:hover{transform:translate(-1px,-1px);}
+@media(max-width:760px){ .nav-links{display:none;} }
+
+/* ============ HERO ============ */
+.hero{padding-top:64px;padding-bottom:24px;}
+.hero-solo{max-width:720px;}
+.hero h1{font-size:clamp(38px,5.4vw,64px);font-weight:800;}
+.hero .accent{color:var(--red);}
+.hero p.lede{font-size:18px;max-width:46ch;color:#3a352c;margin-top:18px;}
+.hero-cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;align-items:center;}
+.btn{
+  font-family:var(--font-mono);font-size:13.5px;text-transform:uppercase;letter-spacing:.05em;
+  padding:13px 22px;border:2.5px solid var(--ink);border-radius:999px;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;background:var(--paper);
+  box-shadow:var(--shadow-hard-sm);transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+.btn.solid{background:var(--red);color:var(--paper);}
+.btn.solid:hover{background:#a83a31;}
+
+/* ---- newsletter ---- */
+.newsletter-card{
+  background:var(--paper); border:2.5px solid var(--ink); border-radius:18px;
+  padding:40px; text-align:center; box-shadow:var(--shadow-hard);
+  position:relative; overflow:hidden;
+}
+.newsletter-card::before{
+  content:""; position:absolute; inset:0;
+  background-image:radial-gradient(circle, rgba(226,167,59,0.18) 1.5px, transparent 1.5px);
+  background-size:14px 14px; pointer-events:none;
+}
+.newsletter-card > *{ position:relative; z-index:1; }
+.newsletter-card h2{ font-size:clamp(26px,3.4vw,36px); }
+.newsletter-card p{ color:#443f34; max-width:52ch; margin:12px auto 0; }
+.newsletter-form{
+  display:flex; gap:10px; justify-content:center; margin-top:26px; flex-wrap:wrap;
+}
+.newsletter-form input[type="email"]{
+  font-family:var(--font-mono); font-size:14px; padding:13px 18px;
+  border:2.5px solid var(--ink); border-radius:999px; background:var(--cream);
+  width:280px; max-width:100%;
+}
+.newsletter-form input[type="email"]:focus-visible{ outline:3px solid var(--red); outline-offset:2px; }
+.newsletter-form button{
+  font-family:var(--font-mono); font-size:13.5px; text-transform:uppercase; letter-spacing:.05em;
+  padding:13px 24px; border:2.5px solid var(--ink); border-radius:999px; cursor:pointer;
+  background:var(--red); color:var(--paper); box-shadow:var(--shadow-hard-sm);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.newsletter-form button:hover{ transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--ink); }
+.newsletter-msg{
+  margin-top:14px; font-family:var(--font-hand); font-size:18px; min-height:24px;
+}
+.newsletter-msg.error{ color:var(--red); font-family:var(--font-mono); font-size:12.5px; }
+.newsletter-note{ margin-top:10px; font-family:var(--font-mono); font-size:11px; color:var(--muted); }
+
+/* ============ SECTION HEADS ============ */
+.section-head{margin-bottom:44px;}
+.section-head h2{font-size:clamp(28px,3.6vw,40px);margin-top:10px;}
+.section-head p{color:var(--muted);max-width:60ch;margin-top:10px;font-size:15.5px;}
+
+/* ============ ABOUT ============ */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+@media(max-width:760px){ .strip{grid-template-columns:1fr;} }
+.panel{background:var(--paper);border:2.5px solid var(--ink);border-radius:16px;padding:22px;box-shadow:var(--shadow-hard-sm);position:relative;}
+.panel .num{font-family:var(--font-mono);font-size:12px;color:var(--muted);}
+.panel h3{font-size:19px;margin-top:10px;}
+.panel p{font-size:14.5px;color:#443f34;margin-top:8px;}
+.panel .icon{width:40px;height:40px;margin-bottom:8px;}
+
+/* ============ SKILLS ============ */
+.skill-groups{display:flex;flex-direction:column;gap:26px;}
+.skill-group-label{font-family:var(--font-mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;display:block;}
+.tags{display:flex;flex-wrap:wrap;gap:10px;}
+.tag{
+  font-family:var(--font-mono);font-size:13px;background:var(--paper);border:2px solid var(--ink);
+  border-radius:8px 8px 8px 2px;padding:7px 12px 7px 26px;position:relative;box-shadow:2px 2px 0 var(--ink);
+}
+.tag::before{content:"";position:absolute; left:9px; top:50%; transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--red);}
+
+/* ============ CARD GRID (projects + blog share this) ============ */
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+@media(max-width:860px){ .card-grid{grid-template-columns:1fr;} }
+.card{
+  background:var(--paper);border:2.5px solid var(--ink);border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow-hard-sm);display:flex;flex-direction:column;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink);}
+.card-body{padding:18px;flex:1;display:flex;flex-direction:column;}
+.card-body h3{font-size:18px;}
+.card-body .card-meta{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.05em;}
+.card-body p{font-size:14px;color:#443f34;margin-top:8px;flex:1;}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.card-tags span{font-family:var(--font-mono);font-size:11px;background:var(--cream);border:1.5px solid var(--ink);border-radius:5px;padding:3px 7px;}
+.card-thumb{
+  height:150px;display:flex;align-items:center;justify-content:center;
+  font-size:40px;border-bottom:2.5px solid var(--ink);overflow:hidden;flex-shrink:0;
+}
+.card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-link{margin-top:14px;font-family:var(--font-mono);font-size:12.5px;text-decoration:none;border-top:1.5px dashed var(--ink);padding-top:10px;display:flex;justify-content:space-between;align-items:center;}
+
+/* ============ DEVLOG MAP ============ */
+.map-wrap{background:var(--paper);border:2.5px solid var(--ink);border-radius:20px;padding:32px;box-shadow:6px 6px 0 var(--ink);position:relative;overflow:hidden;}
+.map-wrap::before{content:"";position:absolute; inset:0;background-image:radial-gradient(circle, rgba(124,154,92,0.18) 1.5px, transparent 1.5px);background-size:14px 14px;pointer-events:none;}
+.map-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:14px;position:relative;z-index:1;}
+.month-label{font-family:var(--font-display);font-weight:700;font-size:22px;}
+.month-nav{display:flex;gap:8px;align-items:center;}
+.month-nav button{font-family:var(--font-mono);width:36px;height:36px;border-radius:50%;border:2px solid var(--ink);background:var(--cream);cursor:pointer;font-size:16px;box-shadow:2px 2px 0 var(--ink);transition:transform .12s ease;}
+.month-nav button:hover{transform:translate(-1px,-1px);}
+.legend{display:flex;gap:16px;font-family:var(--font-mono);font-size:11.5px;color:var(--muted);flex-wrap:wrap;}
+.legend span{display:inline-flex;align-items:center;gap:5px;}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+.weekday-row{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px;position:relative;z-index:1;}
+.weekday-row div{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;color:var(--muted);text-align:center;letter-spacing:.05em;}
+.day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;position:relative;z-index:1;}
+.day{aspect-ratio:1/1;border:2px solid var(--ink);border-radius:12px;background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:default;font-family:var(--font-mono);font-size:13px;position:relative;transition:transform .12s ease, box-shadow .12s ease;padding:4px;}
+.day.empty{border-color:transparent;background:transparent;cursor:default;}
+.day.has-log{cursor:pointer;background:var(--paper);box-shadow:2px 2px 0 var(--ink);}
+.day.has-log:hover, .day.has-log:focus-visible{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink);z-index:5;}
+.day.today{border-color:var(--red);border-width:2.5px;}
+.day .num{font-weight:600;}
+.day .paw{font-size:12px;margin-top:2px;opacity:.85;}
+.day .cat-dot{position:absolute; bottom:6px; width:6px;height:6px;border-radius:50%;}
+.tooltip{
+  position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);
+  width:230px;background:var(--ink);color:var(--paper);border-radius:12px;padding:14px 16px;
+  font-family:var(--font-body);font-size:13px;opacity:0;pointer-events:none;
+  transition:opacity .15s ease, transform .15s ease;z-index:20;box-shadow:0 8px 20px rgba(0,0,0,0.25);
+}
+.tooltip::after{content:"";position:absolute; top:100%; left:50%; transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--ink);}
+.day.has-log:hover .tooltip, .day.has-log:focus-visible .tooltip, .day.has-log.pinned .tooltip{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+.tooltip .t-date{font-family:var(--font-mono);font-size:10.5px;color:#d8cfb8;text-transform:uppercase;letter-spacing:.06em;}
+.tooltip .t-title{font-family:var(--font-display);font-size:15px;margin-top:4px;font-weight:600;}
+.tooltip .t-notes{margin-top:6px;color:#e8e2d2;font-size:12.5px;line-height:1.5;}
+.tooltip .t-tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;}
+.tooltip .t-tags span{font-family:var(--font-mono);font-size:10px;border:1px solid #6b6455;border-radius:4px;padding:2px 6px;color:#d8cfb8;}
+.map-empty-note{margin-top:20px;font-family:var(--font-hand);font-size:17px;color:var(--muted);text-align:center;position:relative;z-index:1;}
+.contact-form{display:flex;flex-direction:column;gap:10px;margin-top:22px;max-width:420px;}
+.contact-form input[type="email"], .contact-form textarea{
+  font-family:var(--font-mono);font-size:14px;padding:13px 16px;
+  border:2.5px solid var(--ink);border-radius:14px;background:var(--cream);width:100%;
+}
+.contact-form textarea{font-family:var(--font-body);font-size:14.5px;resize:vertical;min-height:110px;}
+.contact-form input:focus-visible, .contact-form textarea:focus-visible{outline:3px solid var(--red);outline-offset:2px;}
+.contact-form button{
+  align-self:flex-start;font-family:var(--font-mono);font-size:13.5px;text-transform:uppercase;letter-spacing:.05em;
+  padding:13px 24px;border:2.5px solid var(--ink);border-radius:999px;cursor:pointer;
+  background:var(--red);color:var(--paper);box-shadow:var(--shadow-hard-sm);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.contact-form button:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+.live-badge{
+  font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--green);border:1.5px solid var(--green);border-radius:999px;padding:2px 9px;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.live-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;}
+
+/* ============ CONTACT ============ */
+.postcard{background:var(--paper);border:2.5px solid var(--ink);border-radius:18px;padding:44px;display:grid;grid-template-columns:1.2fr 0.8fr;gap:30px;box-shadow:var(--shadow-hard);position:relative;}
+@media(max-width:760px){ .postcard{grid-template-columns:1fr;padding:28px;} }
+.postcard h2{font-size:clamp(26px,3.4vw,36px);}
+.postcard p{color:#443f34;margin-top:12px;max-width:44ch;}
+.social-row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;}
+.stamp{border:2px dashed var(--ink);border-radius:10px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--font-mono);font-size:12px;color:var(--muted);align-self:start;justify-self:end;}
+.stamp .icon{font-size:26px;margin-bottom:6px;}
+footer{text-align:center;padding:36px 0;font-family:var(--font-mono);font-size:12px;color:var(--muted);}
+
+/* ============ RESUME MODAL ============ */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(34,31,26,0.55); display:none;
+  align-items:center; justify-content:center; z-index:100; padding:24px;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--paper); border:2.5px solid var(--ink); border-radius:18px;
+  width:100%; max-width:640px; max-height:88vh; display:flex; flex-direction:column;
+  box-shadow:var(--shadow-hard); overflow:hidden;
+}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:2px solid var(--ink);}
+.modal-head h3{font-size:19px;}
+.modal-close{background:none;border:2px solid var(--ink);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;line-height:1;box-shadow:2px 2px 0 var(--ink);}
+.modal-close:hover{transform:translate(-1px,-1px);}
+.modal-frame{flex:1;background:var(--cream);}
+.modal-frame iframe{width:100%;height:100%;min-height:420px;border:0;display:block;}
+.modal-frame .no-pdf{padding:40px 24px;text-align:center;color:var(--muted);font-family:var(--font-body);font-size:14px;}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 22px;border-top:2px solid var(--ink);}
+
+/* fade-in on scroll */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="32" cy="40" rx="20" ry="16" fill="#E2A73B" stroke="#221F1A" stroke-width="3"/>
+        <path d="M14 30 Q10 14 22 18" fill="#fff" stroke="#221F1A" stroke-width="3" stroke-linecap="round"/>
+        <path d="M50 30 Q54 14 42 18" fill="#fff" stroke="#221F1A" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="24" cy="36" r="2.4" fill="#221F1A"/>
+        <circle cx="40" cy="36" r="2.4" fill="#221F1A"/>
+        <path d="M27 45 Q32 49 37 45" fill="none" stroke="#221F1A" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="24" y="49" width="16" height="4" rx="2" fill="#C1443A" stroke="#221F1A" stroke-width="1.5"/>
+      </svg>
+      Welcome !
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#devlog">Devlog</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="social-icons" id="navSocials" style="display:none;"></div>
+      <button class="resume-btn" id="openResume">Resume</button>
+    </div>
+  </div>
+</nav>
+
+<div id="top" class="container">
+  <section class="hero hero-solo">
+    <div>
+      <span class="eyebrow">AI / ML Developer</span>
+      <h1>I teach machines<br> to notice things<span class="accent">.</span></h1>
+      <p class="lede">Hi, I'm <strong>Nikisha</strong>, I build models that see, listen, and reason, then ship them where people actually use them. This corner of the internet is part portfolio, part daily field notes.</p>
+      <div class="hero-cta">
+        <a class="btn solid" href="#devlog">See today's devlog →</a>
+        <a class="btn" href="#projects">Browse projects</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">About</span>
+      <h2>The three-panel origin story</h2>
+    </div>
+    <div class="strip">
+      <div class="panel reveal">
+        <span class="num">Panel 1 / 3</span>
+        <svg class="icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#6FA3C4" stroke="#221F1A" stroke-width="3"/><path d="M13 22c2-6 12-6 14 0" stroke="#221F1A" stroke-width="0" fill="none" stroke-linecap="round"/></svg>
+        <h3>Curious about how machines learn</h3>
+        <p>Started out understanding the research papers on weekends, mostly to see if I actually understood them. Turns out breaking them down by concepts is a great way to find out.</p>
+      </div>
+      <div class="panel reveal">
+        <span class="num">Panel 2 / 3</span>
+        <svg class="icon" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" rx="6" fill="#E2A73B" stroke="#221F1A" stroke-width="3"/><circle cx="20" cy="20" r="6" fill="#FFFBF1" stroke="#221F1A" stroke-width="2.5"/></svg>
+        <h3>Now: models that see, hear, reason</h3>
+        <p>Currently  I work across computer vision, NLP and LLM systems, the fun part is the last mile, getting a model from notebook to something real people rely on.</p>
+      </div>
+      <div class="panel reveal">
+        <span class="num">Panel 3 / 3</span>
+        <svg class="icon" viewBox="0 0 40 40"><path d="M8 30 L20 8 L32 30 Z" fill="#7C9A5C" stroke="#221F1A" stroke-width="3" stroke-linejoin="round"/></svg>
+        <h3>Off duty</h3>
+        <p>Sketchbooks, Cooking, watching anime/webseries and an unreasonable number of browser tabs with half-read papers. The devlog below is where all of it actually gets tracked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">My Toolbox</span>
+      <h2>What's on the workbench</h2>
+    </div>
+    <div class="skill-groups reveal" id="skillGroups"></div>
+  </div>
+</section>
+
+<section id="devlog">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Devlog Map</span>
+      <h2>What I've been up to, day by day</h2>
+      <p>Hover or tap a stepping stone to read that day's log.
+    </div>
+    <div class="map-wrap reveal">
+      <div class="map-header">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="month-nav">
+            <button id="prevMonth" aria-label="Previous month">&larr;</button>
+            <button id="nextMonth" aria-label="Next month">&rarr;</button>
+          </div>
+          <span class="month-label" id="monthLabel"></span>
+        </div>
+        <div class="legend">
+          <span><span class="dot" style="background:#6FA3C4"></span>Research</span>
+          <span><span class="dot" style="background:#C1443A"></span>Build</span>
+          <span><span class="dot" style="background:#7C9A5C"></span>Writing</span>
+          <span><span class="dot" style="background:#E2A73B"></span>Other</span>
+        </div>
+      </div>
+      <div class="weekday-row">
+        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+      </div>
+      <div class="day-grid" id="dayGrid"></div>
+      <p class="map-empty-note" id="emptyNote" style="display:none;">Quiet week — the pup's napping in the pod. No entries logged yet.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Selected work</span>
+      <h2>Projects worth a second look</h2>
+    </div>
+    <div class="card-grid" id="projectGrid"></div>
+  </div>
+</section>
+
+<section id="blog">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Writing <span class="live-badge" id="blogLiveBadge" style="display:none;">Live from dev.to</span></span>
+      <h2>Notes &amp; articles</h2>
+      <p>Pulled straight from my <a href="https://dev.to/kaisudo" target="_blank" rel="noopener">dev.to profile</a> 
+    </div>
+    <div class="card-grid" id="blogGrid"></div>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="container">
+    <div class="newsletter-card reveal">
+      <span class="eyebrow">Stay looped in</span>
+      <h2>One email a month</h2>
+      <p>New projects, write-ups, and the occasional paper I couldn't stop thinking about. No spam, unsubscribe anytime.</p>
+      <form class="newsletter-form" id="newsletterForm" novalidate>
+        <label for="newsletterEmail" class="visually-hidden" style="position:absolute;left:-9999px;">Email address</label>
+        <input type="email" id="newsletterEmail" name="email" placeholder="you@example.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="newsletter-msg" id="newsletterMsg" aria-live="polite"></p>
+      <p class="newsletter-note">Powered by <a href="https://emailoctopus.com" target="_blank" rel="noopener">EmailOctopus</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="postcard reveal">
+      <div>
+        <span class="eyebrow">Get in touch</span>
+        <h2>Send a message, get a reply</h2>
+        <p>Open to research collaborations and interesting side quests. Drop a note below, or reach me directly through any of the handles.</p>
+        <form class="contact-form" id="contactForm" novalidate>
+          <label for="contactEmail" class="visually-hidden" style="position:absolute;left:-9999px;">Your email</label>
+          <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
+          <label for="contactMessage" class="visually-hidden" style="position:absolute;left:-9999px;">Your message</label>
+          <textarea id="contactMessage" name="message" placeholder="What's on your mind?" required></textarea>
+          <button type="submit">Send message</button>
+          <p class="newsletter-msg" id="contactMsg" aria-live="polite"></p>
+        </form>
+        <div class="social-row" id="contactSocials"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>Built with a lot of coffee. © 2026 Nikisha.</footer>
+
+<!-- Resume modal -->
+<div class="modal-overlay" id="resumeModal" role="dialog" aria-modal="true" aria-labelledby="resumeModalTitle">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="resumeModalTitle">Resume</h3>
+      <button class="modal-close" id="closeResume" aria-label="Close resume">✕</button>
+    </div>
+    <div class="modal-frame" id="resumeFrame"></div>
+    <div class="modal-foot">
+      <a class="btn" id="resumeDownload" href="#" download>Download PDF ↓</a>
+      <button class="btn solid" id="closeResume2">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   SITE CONFIG — everything you're likely to edit lives here.
+   Change the values below; the page renders itself from this.
+   ========================================================= */
+const SITE = {
+
+  // Path to your resume PDF. Drop the file next to index.html
+  // (e.g. an "assets" folder) and point this at it.
+  resume: {
+    pdfPath: "assets/resume.pdf"
+  },
+
+  // Newsletter signup → EmailOctopus.
+  // Fill in apiKey + listId and every signup lands straight in that
+  // EmailOctopus list — nothing else to configure.
+  //
+  // Where to find them: EmailOctopus dashboard → Settings → API (for the
+  // key) → your list → Settings (for the list ID).
+  //
+  // Security note: this is a static site with no server, so an apiKey
+  // pasted below is visible to anyone who views your page source. Fine for
+  // a low-stakes signup form; if you'd rather not expose it, set "endpoint"
+  // instead to a small serverless function (Cloudflare Worker / Netlify
+  // Function) that holds the real key and forwards requests to EmailOctopus
+  // — then leave apiKey blank.
+  newsletter: {
+    apiKey: "eo_5eb565f11dd16bf7030e5d5596bbc2fcc2dedd9da92ef5b018a6571cdafe7a4d",
+    listId: "1e6a22ae-9325-11f1-bedb-7915041e8430",
+    endpoint: ""
+  },
+
+  // Social + dev links shown in the nav and contact section.
+  // "short" is the 2-3 letter badge shown in the nav circle.
+  socials: [
+    { label:"GitHub",  short:"GH",  url:"https://github.com/nikisha77" },
+    { label:"Twitter/X", short:"X", url:"https://x.com/k_nikisha" },
+    { label:"dev.to",  short:"dev", url:"https://dev.to/kaisudo" },
+      { label:"Kaggle",  short:"Kaggle", url:"https://www.kaggle.com/kaisudo" }
+  ],
+
+  // Contact form → Web3Forms.
+  // This is deliberately NOT EmailOctopus: EmailOctopus is a mailing-list
+  // tool, so a message sent through it would only become a "contact" in a
+  // list, not an email in your inbox. Web3Forms exists specifically to take
+  // a form submission and email it straight to one address — a much better
+  // fit for "send a message, get a reply."
+  //
+  // Setup (2 minutes, no account needed):
+  //  1. Go to web3forms.com → enter knikisha77@gmail.com → they instantly
+  //     email you an Access Key.
+  //  2. Paste that key below. Every submission is then relayed straight to
+  //     knikisha77@gmail.com, with the sender's address set as reply-to so
+  //     you can just hit Reply.
+  contact: {
+    web3formsAccessKey: "c835336a-a664-48ee-8dca-2d319452917a"
+  },
+
+  skills: {
+    groups: [
+      { label:"Languages & Core", items:["Python","SQL","Bash"] },
+      { label:"ML / DL", items:["PyTorch","Transformers","scikit-learn","Langchain","Hugging Face","Agentic AI","Data Analysis","Machine Learning","Deep Learning"] },
+      { label:"Tools and Platforms", items:[
+        "Git/GitHub","Docker","Streamlit","Looker","Jupyter Notebooks","VS Code","Jira","Confluence"
+      ] }
+    ]
+  },
+
+  projects: [
+    { title:"Packaging OEE Dashboard & Conversational AI",
+      desc:"An interactive dashboard and AI chatbot for analyzing Overall Equipment Effectiveness (OEE) data for packaging devices.",
+      tags:["Python","LLM","Dashboard"], url:"https://github.com/nikisha77/Automatic_OEE_using_Langchain", linkLabel:"View repo" },
+    {  title:"Text-to-video generation",
+      desc:"Learning is vital, but we often fall short of resources to explore certain topics. Stable Diffusion is a deep learning architecture that transforms random noise into coherent images or videos through diffusion steps. We're using this to generate engaging educational content on the animal kingdom..",
+      tags:["LLMs","Python","Stable Diffusion"], url:"https://github.com/nikisha77/Text-video-generation", linkLabel:"View repo" },
+    {  title:"FeedBot Intelligent Feedback and Review Analysis",
+      desc:"Feedbot handles customer feedback surveys and queries, offering context-aware responses, chat summarization, and sentiment analysis to provide actionable insights for development and marketing teams.",
+      tags:["Python","LLMs","NLP","Sentiment Analysis"], url:"https://github.com/nikisha77/feedBot-Intelligent-Feedback-and-Review-Analysis", linkLabel:"View repo" }
+  ],
+
+  // Blog posts — fetched live from dev.to's public API (no key needed) using
+  // this username. Change it to switch whose posts load.
+  blog: {
+    devtoUsername: "kaisudo",
+    maxPosts: 6,
+    // Shown only if the dev.to API call fails (offline preview, rate limit,
+    // username typo, etc.) so the section never renders empty.
+    fallback: [
+      { emoji:"📝", color:"#C1443A", date:"Aug 2026", title:"Latency tricks for streaming inference",
+        desc:"Notes on getting a voice model under 80ms end-to-end, from batching to kernel fusion.",
+        tags:["Inference","Edge ML"], url:"https://dev.to/kaisudo", linkLabel:"Read on dev.to" },
+      { emoji:"🧠", color:"#6FA3C4", date:"Jul 2026", title:"What RAG gets wrong about retrieval",
+        desc:"Hybrid search beat pure embeddings in almost every eval I ran — here's why, with numbers.",
+        tags:["RAG","LLMs"], url:"https://dev.to/kaisudo", linkLabel:"Read on dev.to" },
+      { emoji:"🔬", color:"#7C9A5C", date:"Jun 2026", title:"Re-deriving backprop, on paper",
+        desc:"A weekend exercise that made attention gradients finally click.",
+        tags:["Fundamentals"], url:"https://dev.to/kaisudo", linkLabel:"Read on dev.to" }
+    ]
+  },
+
+  // Devlog entries — add one line per logged day.
+  // category: "research" | "build" | "writing" | "other"
+
+  // date , titile, category, tags (array), notes (optional)
+  devlog: [
+    { date:"2026-08-08", title:"Portfolio day 🎊", category:"other", tags:["Day 1 "], notes:"Built this portfolio website." }
+
+  ]
+};
+
+/* =========================================================
+   RENDERERS — you shouldn't need to touch this section.
+   ========================================================= */
+
+// ---- Socials (nav + contact) ----
+function renderSocials(){
+  const nav = document.getElementById("navSocials");
+  const contact = document.getElementById("contactSocials");
+  SITE.socials.forEach(s => {
+    const badge = document.createElement("a");
+    badge.className = "icon-badge";
+    badge.href = s.url;
+    badge.textContent = s.short;
+    badge.setAttribute("aria-label", s.label);
+    badge.target = s.url.startsWith("mailto:") ? "_self" : "_blank";
+    badge.rel = "noopener";
+    if (nav) nav.appendChild(badge);
+
+    const btn = document.createElement("a");
+    btn.className = "btn" + (s.label === "Email" ? " solid" : "");
+    btn.href = s.url;
+    btn.textContent = s.label;
+    btn.target = s.url.startsWith("mailto:") ? "_self" : "_blank";
+    btn.rel = "noopener";
+    contact.appendChild(btn);
+  });
+}
+
+// ---- Skills ----
+function renderSkills(){
+  const wrap = document.getElementById("skillGroups");
+  SITE.skills.groups.forEach(g => {
+    const block = document.createElement("div");
+    const label = document.createElement("span");
+    label.className = "skill-group-label";
+    label.textContent = g.label;
+    const tagWrap = document.createElement("div");
+    tagWrap.className = "tags";
+    g.items.forEach(item => {
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = item;
+      tagWrap.appendChild(tag);
+    });
+    block.appendChild(label);
+    block.appendChild(tagWrap);
+    wrap.appendChild(block);
+  });
+}
+
+// ---- Cards (shared by projects + blog) ----
+function renderCards(list, targetId, opts){
+  opts = opts || {};
+  const wrap = document.getElementById(targetId);
+  list.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card reveal in";
+
+    if (item.image){
+      const thumb = document.createElement("div");
+      thumb.className = "card-thumb";
+      const img = document.createElement("img");
+      img.src = item.image;
+      img.alt = "";
+      img.loading = "lazy";
+      img.addEventListener("error", () => {
+        // cover image 404'd or failed to load — just drop the thumb entirely
+        thumb.remove();
+      });
+      thumb.appendChild(img);
+      card.appendChild(thumb);
+    }
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    if (item.date){
+      const meta = document.createElement("div");
+      meta.className = "card-meta";
+      meta.textContent = item.date;
+      body.appendChild(meta);
+    }
+
+    const h3 = document.createElement("h3");
+    h3.textContent = item.title;
+    body.appendChild(h3);
+
+    const p = document.createElement("p");
+    p.textContent = item.desc;
+    body.appendChild(p);
+
+    const tagRow = document.createElement("div");
+    tagRow.className = "card-tags";
+    (item.tags || []).forEach(t => {
+      const span = document.createElement("span");
+      span.textContent = t;
+      tagRow.appendChild(span);
+    });
+    body.appendChild(tagRow);
+
+    const link = document.createElement("a");
+    link.className = "card-link";
+    link.href = item.url;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.innerHTML = (item.linkLabel || "View") + " <span>→</span>";
+    body.appendChild(link);
+
+    card.appendChild(body);
+    wrap.appendChild(card);
+  });
+}
+
+// ---- Blog: live from dev.to ----
+async function loadDevToPosts(){
+  const cfg = SITE.blog;
+  const badge = document.getElementById("blogLiveBadge");
+  const palette = ["#C1443A", "#6FA3C4", "#7C9A5C", "#E2A73B"];
+  const emojis = ["📝", "🧠", "🔬", "⚙️", "📡", "💡"];
+
+  try{
+    const res = await fetch(
+      `https://dev.to/api/articles?username=${encodeURIComponent(cfg.devtoUsername)}&per_page=${cfg.maxPosts || 6}`
+    );
+    if (!res.ok) throw new Error("dev.to API returned " + res.status);
+    const posts = await res.json();
+    if (!Array.isArray(posts) || posts.length === 0) throw new Error("No posts returned");
+
+    const cards = posts.map((p, i) => ({
+      // dev.to always returns a social_image (auto-generated if the author
+      // didn't set a cover_image), so real posts get a real image instead
+      // of the emoji tile — that only shows up if both are ever missing.
+      image: p.cover_image || p.social_image || null,
+      emoji: emojis[i % emojis.length],
+      color: palette[i % palette.length],
+      date: new Date(p.published_at).toLocaleDateString("en-US", { month:"short", year:"numeric" }),
+      title: p.title,
+      desc: p.description || "",
+      tags: (p.tag_list || []).slice(0, 4),
+      url: p.url,
+      linkLabel: "Read on dev.to"
+    }));
+
+    renderCards(cards, "blogGrid");
+    if (badge) badge.style.display = "inline-flex";
+  }catch(err){
+    console.warn("Falling back to static blog posts — dev.to fetch failed:", err);
+    renderCards(cfg.fallback || [], "blogGrid");
+  }
+}
+
+// ---- Contact form: Web3Forms ----
+// (Not EmailOctopus — EmailOctopus is a mailing-list tool, so it would only
+// add the sender as a "contact" with no way to deliver the message to your
+// inbox on its own. Web3Forms is built specifically to relay a form
+// submission straight to one email address, no server required.)
+async function submitContactMessage(email, message){
+  const cfg = SITE.contact;
+  if (!cfg.web3formsAccessKey) throw new Error("not configured");
+
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      access_key: cfg.web3formsAccessKey,
+      subject: "New message from your portfolio site",
+      from_name: email,
+      email: email,       // sent as reply-to, so you can just hit "reply"
+      message: message
+    })
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.success === false) throw new Error("Web3Forms request failed");
+}
+
+function setupContactForm(){
+  const form = document.getElementById("contactForm");
+  const emailInput = document.getElementById("contactEmail");
+  const messageInput = document.getElementById("contactMessage");
+  const msg = document.getElementById("contactMsg");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!emailOk){
+      msg.textContent = "That doesn't look like a valid email — try again?";
+      msg.className = "newsletter-msg error";
+      return;
+    }
+    if (!message){
+      msg.textContent = "Looks like the message is empty — mind adding a line or two?";
+      msg.className = "newsletter-msg error";
+      return;
+    }
+
+    try{
+      msg.textContent = "Sending...";
+      msg.className = "newsletter-msg";
+      await submitContactMessage(email, message);
+      msg.textContent = "Got it — thanks for reaching out! 🐾";
+      form.reset();
+    }catch(err){
+      if (err.message === "not configured"){
+        msg.textContent = "Thanks!";
+        form.reset();
+      } else {
+        console.error("Contact form submit failed:", err);
+        msg.textContent = "Something went wrong — mind trying again in a bit?";
+        msg.className = "newsletter-msg error";
+      }
+    }
+  });
+}
+
+// ---- Devlog: pull in entries synced from Google Tasks ----
+// devlog-google.json is written by a scheduled GitHub Action
+// (.github/workflows/sync-devlog.yml, running scripts/sync-google-tasks.mjs)
+// — never generated in the browser, so there's nothing to click or connect
+// on the public site. Hand-written SITE.devlog entries always win if a date
+// has both, so you can override or annotate any auto-synced day.
+async function loadGoogleDevlog(){
+  try{
+    const res = await fetch("devlog-google.json", { cache: "no-store" });
+    if (!res.ok) return; // not generated yet (e.g. first deploy) — stay quiet
+    const entries = await res.json();
+    if (!Array.isArray(entries)) return;
+    entries.forEach(e => {
+      if (!entriesByDate[e.date]) entriesByDate[e.date] = e;
+    });
+    renderCalendar();
+  }catch(err){
+    console.warn("Google-synced devlog entries unavailable:", err);
+  }
+}
+
+// ---- Devlog calendar ----
+const categoryColor = { research:"#6FA3C4", build:"#C1443A", writing:"#7C9A5C", other:"#E2A73B" };
+let entriesByDate = {};
+SITE.devlog.forEach(e => entriesByDate[e.date] = e);
+
+let today = new Date();
+let viewYear = today.getFullYear();
+let viewMonth = today.getMonth();
+
+if (SITE.devlog.length){
+  const hasCurrent = SITE.devlog.some(e => {
+    const d = new Date(e.date + "T00:00:00");
+    return d.getFullYear() === viewYear && d.getMonth() === viewMonth;
+  });
+  if (!hasCurrent){
+    const latest = SITE.devlog.reduce((a,b) => a.date > b.date ? a : b);
+    const d = new Date(latest.date + "T00:00:00");
+    viewYear = d.getFullYear();
+    viewMonth = d.getMonth();
+  }
+}
+
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+function pad(n){ return n < 10 ? "0"+n : ""+n; }
+
+function renderCalendar(){
+  const grid = document.getElementById("dayGrid");
+  const label = document.getElementById("monthLabel");
+  const emptyNote = document.getElementById("emptyNote");
+  grid.innerHTML = "";
+  label.textContent = monthNames[viewMonth] + " " + viewYear;
+
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  let anyEntry = false;
+
+  for (let i = 0; i < firstDay; i++){
+    const filler = document.createElement("div");
+    filler.className = "day empty";
+    grid.appendChild(filler);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++){
+    const dateStr = viewYear + "-" + pad(viewMonth+1) + "-" + pad(d);
+    const entry = entriesByDate[dateStr];
+    const cell = document.createElement(entry ? "button" : "div");
+    cell.className = "day" + (entry ? " has-log" : "");
+
+    const isToday = (viewYear === today.getFullYear() && viewMonth === today.getMonth() && d === today.getDate());
+    if (isToday) cell.classList.add("today");
+
+    const num = document.createElement("span");
+    num.className = "num";
+    num.textContent = d;
+    cell.appendChild(num);
+
+    if (entry){
+      anyEntry = true;
+      const paw = document.createElement("span");
+      paw.className = "paw";
+      paw.textContent = "🐾";
+      cell.appendChild(paw);
+
+      const catDot = document.createElement("span");
+      catDot.className = "cat-dot";
+      catDot.style.background = categoryColor[entry.category] || "#8A8172";
+      cell.appendChild(catDot);
+
+      const tip = document.createElement("div");
+      tip.className = "tooltip";
+      tip.innerHTML =
+        '<div class="t-date">' + monthNames[viewMonth].slice(0,3) + " " + d + '</div>' +
+        '<div class="t-title">' + entry.title + '</div>' +
+        '<div class="t-notes">' + entry.notes + '</div>' +
+        '<div class="t-tags">' + entry.tags.map(t => '<span>'+t+'</span>').join("") + '</div>';
+      cell.appendChild(tip);
+
+      cell.setAttribute("aria-label", d + " " + monthNames[viewMonth] + ": " + entry.title);
+      cell.addEventListener("click", () => {
+        const wasPinned = cell.classList.contains("pinned");
+        document.querySelectorAll(".day.pinned").forEach(el => el.classList.remove("pinned"));
+        if (!wasPinned) cell.classList.add("pinned");
+      });
+    }
+    grid.appendChild(cell);
+  }
+  emptyNote.style.display = anyEntry ? "none" : "block";
+}
+
+document.getElementById("prevMonth").addEventListener("click", () => {
+  viewMonth--; if (viewMonth < 0){ viewMonth = 11; viewYear--; }
+  renderCalendar();
+});
+document.getElementById("nextMonth").addEventListener("click", () => {
+  viewMonth++; if (viewMonth > 11){ viewMonth = 0; viewYear++; }
+  renderCalendar();
+});
+
+// ---- Resume modal ----
+function setupResumeModal(){
+  const overlay = document.getElementById("resumeModal");
+  const openBtn = document.getElementById("openResume");
+  const closeBtn = document.getElementById("closeResume");
+  const closeBtn2 = document.getElementById("closeResume2");
+  const frame = document.getElementById("resumeFrame");
+  const downloadLink = document.getElementById("resumeDownload");
+  let lastFocused = null;
+
+  downloadLink.href = SITE.resume.pdfPath;
+
+  function open(){
+    lastFocused = document.activeElement;
+    frame.innerHTML = '<iframe src="' + SITE.resume.pdfPath + '" title="Resume PDF preview"></iframe>';
+    overlay.classList.add("open");
+    closeBtn.focus();
+    document.addEventListener("keydown", onKeydown);
+  }
+  function close(){
+    overlay.classList.remove("open");
+    frame.innerHTML = "";
+    document.removeEventListener("keydown", onKeydown);
+    if (lastFocused) lastFocused.focus();
+  }
+  function onKeydown(e){
+    if (e.key === "Escape") close();
+  }
+
+  openBtn.addEventListener("click", open);
+  closeBtn.addEventListener("click", close);
+  closeBtn2.addEventListener("click", close);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+}
+
+// ---- interactive dog mascot ----
+// ---- newsletter form ----
+function setupNewsletter(){
+  const form = document.getElementById("newsletterForm");
+  const input = document.getElementById("newsletterEmail");
+  const msg = document.getElementById("newsletterMsg");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = input.value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailOk){
+      msg.textContent = "That doesn't look like a valid email — try again?";
+      msg.className = "newsletter-msg error";
+      return;
+    }
+
+    if (SITE.newsletter.endpoint){
+      try{
+        msg.textContent = "Sending...";
+        msg.className = "newsletter-msg";
+        const res = await fetch(SITE.newsletter.endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+        if (!res.ok) throw new Error("Request failed");
+        msg.textContent = "You're on the list! 🐾";
+        form.reset();
+      }catch(err){
+        msg.textContent = "Something went wrong — mind trying again in a bit?";
+        msg.className = "newsletter-msg error";
+      }
+      return;
+    }
+
+    if (SITE.newsletter.apiKey && SITE.newsletter.listId){
+      try{
+        msg.textContent = "Sending...";
+        msg.className = "newsletter-msg";
+        const res = await fetch(`https://emailoctopus.com/api/1.6/lists/${SITE.newsletter.listId}/contacts`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            api_key: "eo_5eb565f11dd16bf7030e5d5596bbc2fcc2dedd9da92ef5b018a6571cdafe7a4d",
+            email_address: email,
+            status: "SUBSCRIBED"
+          })
+        });
+        if (!res.ok) throw new Error("EmailOctopus request failed: " + res.status);
+        msg.textContent = "You're on the list! 🐾";
+        form.reset();
+      }catch(err){
+        msg.textContent = "Something went wrong — mind trying again in a bit?";
+        msg.className = "newsletter-msg error";
+      }
+      return;
+    }
+
+    // Demo mode: no provider configured yet.
+    msg.textContent = "You're on the list!"
+    msg.className = "newsletter-msg";
+    form.reset();
+  });
+}
+
+// ---- init ----
+renderSocials();
+renderSkills();
+renderCards(SITE.projects, "projectGrid");
+loadDevToPosts();
+renderCalendar();
+loadGoogleDevlog();
+setupResumeModal();
+setupNewsletter();
+setupContactForm();
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
