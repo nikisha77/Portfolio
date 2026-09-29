@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<!-- Build: 2026-09-30 v7 — theme toggle, no nav name, auto GitHub + Medium -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI & ML Developer Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <script>
+    // Apply saved theme (or the system preference) before the page paints
+    (function () {
+      var t; try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.classList.toggle('dark', t === 'dark');
+    })();
+  </script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Lora', 'serif'] },
+          // Colours read from CSS variables (see STYLES) so light/dark can swap them
+          colors: {
+            card: 'rgb(var(--card) / <alpha-value>)',
+            stone: Object.fromEntries([50,100,200,300,400,500,600,700,800,900].map(n => [n, `rgb(var(--stone-${n}) / <alpha-value>)`])),
+          },
+          animation: { 'fade-in': 'fadeIn 0.5s ease-out forwards' },
+          keyframes: {
+            fadeIn: {
+              '0%':   { opacity: '0', transform: 'translateY(12px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- ==========================================================================
+       STYLES  (custom CSS that Tailwind classes can't express)
+       ========================================================================== -->
+  <style>
+    /* ---- Theme colours (edit these to restyle light / dark) ---- */
+    :root {
+      --card: 255 255 255;
+      --stone-50: 250 250 249;  --stone-100: 245 245 244; --stone-200: 231 229 228;
+      --stone-300: 214 211 209; --stone-400: 168 162 158; --stone-500: 120 113 108;
+      --stone-600: 87 83 78;    --stone-700: 68 64 60;    --stone-800: 41 37 36;
+      --stone-900: 28 25 23;
+      color-scheme: light;
+    }
+    :root.dark {
+      --card: 28 25 23;
+      --stone-50: 12 10 9;      --stone-100: 28 25 23;    --stone-200: 41 37 36;
+      --stone-300: 68 64 60;    --stone-400: 120 113 108; --stone-500: 168 162 158;
+      --stone-600: 214 211 209; --stone-700: 231 229 228; --stone-800: 245 245 244;
+      --stone-900: 250 250 249;
+      color-scheme: dark;
+    }
+
+    body { background: rgb(var(--stone-50)); color: rgb(var(--stone-900)); overflow-y: scroll; }
+
+    /* Theme toggle icons: moon shows in light mode, sun in dark mode */
+    .icon-sun { display: none; }
+    :root.dark .icon-sun { display: block; }
+    :root.dark .icon-moon { display: none; }
+
+    /* Animated underline on hover */
+    .hover-underline { position: relative; }
+    .hover-underline::after {
+      content: ''; position: absolute; left: 0; bottom: 0;
+      width: 100%; height: 1px; background: currentColor;
+      transform: scaleX(0); transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+    }
+    .hover-underline:hover::after { transform: scaleX(1); transform-origin: bottom left; }
+
+    /* Active nav link */
+    .nav-active { color: rgb(var(--stone-900)) !important; border-bottom: 2px solid rgb(var(--stone-900)); }
+
+    /* Blog article typography (used by blog post content) */
+    .prose p { margin-bottom: 1.6em; line-height: 1.8; color: rgb(var(--stone-700)); }
+    .prose h1, .prose h2, .prose h3, .prose h4 { color: rgb(var(--stone-900)); font-weight: 600; margin: 2em 0 1em; font-family: 'Inter', sans-serif; letter-spacing: -0.02em; }
+    .prose h1 { font-size: 1.75rem; font-weight: 700; }
+    .prose h2 { font-size: 1.5rem; }
+    .prose h3 { font-size: 1.25rem; }
+    .prose h4 { font-size: 1.1rem; }
+    .prose ul { list-style: disc; padding-left: 1.5em; margin-bottom: 1.5em; color: rgb(var(--stone-700)); }
+    .prose ol { list-style: decimal; padding-left: 1.5em; margin-bottom: 1.5em; color: rgb(var(--stone-700)); }
+    .prose li { margin-bottom: 0.5em; }
+    .prose strong { font-weight: 600; color: rgb(var(--stone-900)); }
+    .prose blockquote { border-left: 3px solid rgb(var(--stone-300)); padding-left: 1.5em; font-style: italic; color: rgb(var(--stone-500)); margin-bottom: 1.5em; font-size: 1.1em; }
+    .prose code { background: rgb(var(--stone-100)); padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; font-family: ui-monospace, monospace; }
+    .prose pre { background: #1c1917; color: #e7e5e4; padding: 1.5em; border-radius: 6px; overflow-x: auto; margin-bottom: 1.5em; font-size: 0.9em; border: 1px solid rgb(var(--stone-200)); }
+    .prose pre code { background: transparent; color: inherit; padding: 0; }
+    .prose a { text-decoration: underline; text-underline-offset: 4px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 6px; margin: 1.5em 0; }
+    .prose hr { border: 0; border-top: 1px solid rgb(var(--stone-200)); margin: 2em 0; }
+    .prose figure { margin: 1.5em 0; }
+    .prose figcaption { text-align: center; font-size: 0.85em; color: rgb(var(--stone-500)); }
+    .prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5em; font-size: 0.9em; display: block; overflow-x: auto; }
+    .prose th, .prose td { border: 1px solid rgb(var(--stone-200)); padding: 0.5em 0.75em; text-align: left; }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-stone-200 selection:text-stone-900">
+
+  <!-- ==========================================================================
+       PAGE SHELL  (nav + footer are filled in by JavaScript from the CONFIG)
+       ========================================================================== -->
+  <nav class="fixed top-0 w-full z-50 bg-stone-50/95 backdrop-blur-md border-b border-stone-200/50">
+    <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-end gap-6 md:gap-8">
+      <div id="nav-links" class="flex gap-6 md:gap-8 text-sm font-medium text-stone-500"></div>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode" class="text-stone-500 hover:text-stone-900 transition-colors">
+        <svg class="icon-moon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        <svg class="icon-sun w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main id="app" class="pt-32 pb-24 px-6 min-h-[85vh]"></main>
+
+  <footer class="border-t border-stone-200/50 py-12 text-center text-stone-400 text-sm">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>&copy; <span id="footer-year"></span> <span id="footer-name"></span></p>
+      <div id="footer-socials" class="flex flex-wrap justify-center gap-x-6 gap-y-2 font-medium"></div>
+    </div>
+  </footer>
+
+
+  <!-- ==========================================================================
+       1. SITE CONFIG & CONTENT   ← THIS IS THE ONLY SECTION YOU NEED TO EDIT
+       ========================================================================== -->
+  <script>
+    /* ---------- Site settings ---------- */
+    const SITE = {
+      // Navigation tabs. `route` must match a route in section 3.
+      nav: [
+        { label: 'Home',     route: 'home' },
+        { label: 'Projects', route: 'projects' },
+        { label: 'Blog',     route: 'blog' },
+      ],
+      homeProjectCount: 4,   // how many projects appear on the Home page
+      homeBlogCount: 2,      // how many posts appear on the Home page
+
+      // ---- AUTO-PULLED CONTENT ----
+      // Fill in your username / host to switch these on. Leave '' to use the manual lists below.
+      github:   { username: 'nikisha77', count: 0, skipForks: true },   // count: 0 = ALL repos; skipForks hides forked repos (Home shows homeProjectCount)
+      medium:   { username: 'knikisha04', count: 0 },                  // count: 0 = show ALL posts Medium's feed provides (latest ~10; Home still shows homeBlogCount)
+
+      // Headings & subtitles for each section
+      text: {
+        homeProjects:  { title: 'Things I\'ve Built', subtitle: 'A few projects I\'m proud of — take a look around!' },
+        homeBlog:      { title: 'What I\'ve Been Writing', subtitle: 'Notes and lessons from my  adventures.' },
+        projectsPage:  { title: 'Projects',   subtitle: 'Here\'s a collection of things I\'ve built and experimented with. Enjoy!' },
+        blogPage:      { title: 'Writing',    subtitle: 'Friendly explainers - written to be easy to follow.' },
+        resumePage:    { title: 'My Journey' },
+      },
+    };
+
+    /* ---------- Personal info ---------- */
+    const PROFILE = {
+      name: 'Nikisha',
+      title: 'AI/ML Engineer',
+      tagline: '',
+      about: 'I love taking ideas from research papers and turning them into mini projects and in depth blogs. Lately I\'ve been shrinking transformer models so they can run on small devices, and breaking down ML systems through math and real-life problems. Whether you want to collaborate, chat about ML, or just say hi, I\'d love to hear from you!',
+      email: 'knikisha04@gmail.com',
+      // Replace "your-handle" with your real usernames. Email is added automatically from `email` above.
+      socials: [
+        { name: 'GitHub',       url: 'https://github.com/nikisha77' },
+        { name: 'Medium',       url: 'https://medium.com/@knikisha04' },
+        { name: 'Kaggle',       url: 'https://www.kaggle.com/kaisudo404' },
+        { name: 'YouTube',      url: 'https://youtube.com/@kaisudo_404?si=X2yio_Mc33U1xHUF' },
+        { name: 'TensorTonic',    url: 'https://www.tensortonic.com/profile/nikisha' },
+        { name: 'Hugging Face', url: 'https://huggingface.co/kaisudo404' },
+        { name: 'X',            url: 'https://x.com/k_nikisha' },
+        { name: 'LinkedIn',     url: 'https://www.linkedin.com/in/nikisha-k' },
+      ],
+    };
+
+    /* ---------- Resume ---------- */
+    const RESUME = {
+      pdfLink: 'resume.pdf',   // your resume PDF: keep a file named resume.pdf next to this page (replace it to update), or put a full URL here
+      summary: 'I\'m a machine learning engineer who enjoys building AI systems end to end — from messy data to a working product. I especially like making models smaller, faster, and easier to deploy.',
+      skills: [
+        { category: 'Languages & Frameworks', items: 'Python, C++, PyTorch, TensorFlow, JAX' },
+        { category: 'Architecture & Ops',     items: 'Docker, Kubernetes, AWS SageMaker, TensorRT, ONNX' },
+        { category: 'Domain Expertise',       items: 'Computer Vision, LLMs, RAG, Semantic Search, Edge AI' },
+      ],
+      experience: [
+        {
+          role: 'Senior AI Engineer', company: 'Nexus Technologies', period: '2023 - Present',
+          description: 'I lead a team building a computer vision system that spots defects in real time, right on the device. By optimizing YOLO models with TensorRT, we made inference 45% faster on NVIDIA Jetson hardware.',
+        },
+        {
+          role: 'Machine Learning Engineer', company: 'DataFlow Systems', period: '2020 - 2023',
+          description: 'I built and looked after a RAG pipeline that helps people find answers in long legal documents. I handled embedding storage with Faiss and plugged in modern LLMs to make insights easier to extract.',
+        },
+      ],
+      education: [
+        { degree: 'M.S. in Computer Science (Artificial Intelligence)', institution: 'Stanford University', period: '2018 - 2020' },
+      ],
+    };
+
+    /* ---------- Optional manual projects (shown only if GitHub is off or fails; leave empty to show nothing) ---------- */
+    const FALLBACK_PROJECTS = [];
+
+    /* ---------- Optional manual blog posts (shown only if Medium is off or fails; leave empty to show nothing) ---------- */
+    const FALLBACK_BLOGS = [];
+  </script>
+
+
+  <!-- ==========================================================================
+       2. AUTO-LOADERS   (pull projects from GitHub and posts from Medium)
+       Settings live in SITE.github / SITE.medium above. If a source is
+       switched off or fails, the manual FALLBACK lists are used instead.
+       ========================================================================== -->
+  <script>
+    let PROJECTS = FALLBACK_PROJECTS;
+    let BLOGS = FALLBACK_BLOGS;
+
+    const CACHE_MINUTES = 10;   // avoids hammering the APIs on every page load
+
+    const esc = (t = '') => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    /** Returns cached data if it's fresh, otherwise runs `loader` and caches the result. */
+    async function cached(key, loader) {
+      try {
+        const hit = JSON.parse(localStorage.getItem(key));
+        if (hit && Date.now() - hit.time < CACHE_MINUTES * 60000) return hit.data;
+      } catch {}
+      const data = await loader();
+      if (Array.isArray(data) && data.length) {
+        try { localStorage.setItem(key, JSON.stringify({ time: Date.now(), data })); } catch {}
+      }
+      return data;
+    }
+
+    /** fetch() that gives up after 8 seconds, so a slow or blocked service can never freeze the page */
+    const timedFetch = (url, opts = {}, ms = 8000) => {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), ms);
+      return fetch(url, { ...opts, signal: ctl.signal })
+        .catch(e => { throw new Error(e.name === 'AbortError' ? `${new URL(url).hostname} took too long to respond` : `${new URL(url).hostname} could not be reached`); })
+        .finally(() => clearTimeout(timer));
+    };
+
+    const LOAD_ERRORS = {};
+    const LOADING = { github: false, medium: false };   // reasons a section is empty (shown on the page so you can see what went wrong)
+
+    const stripTags = (html) => new DOMParser().parseFromString(html || '', 'text/html').body.textContent.trim();
+
+    /** Removes scripts/iframes/inline handlers from HTML that comes from outside */
+    function sanitizeHtml(html) {
+      const doc = new DOMParser().parseFromString(html || '', 'text/html');
+      doc.querySelectorAll('script,style,iframe,object,embed,link,meta,form').forEach(n => n.remove());
+      doc.querySelectorAll('img[src*="medium.com/_/stat"]').forEach(n => n.remove());   // Medium's 1px tracking pixel
+      doc.querySelectorAll('*').forEach(el => [...el.attributes].forEach(a => {
+        if (/^on/i.test(a.name) || /^\s*javascript:/i.test(a.value)) el.removeAttribute(a.name);
+      }));
+      return doc.body.innerHTML;
+    }
+
+    const formatDate = (d) => isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+    /** GitHub → project cards (most recently pushed first). count: 0 = ALL repos */
+    async function fetchGithubProjects({ username, count, skipForks }) {
+      const res = await timedFetch(`https://api.github.com/users/${username}/repos?sort=pushed&per_page=100`);
+      if (!res.ok) throw new Error(`GitHub responded ${res.status}` + (res.status === 403 ? ' (rate limit, try again later)' : ''));
+      const repos = await res.json();
+      return repos
+        .filter(r => !(skipForks && r.fork) && r.name.toLowerCase() !== username.toLowerCase())
+        .slice(0, count || undefined)
+        .map(r => ({
+          title: esc(r.name.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase())),
+          category: esc(r.language || 'Repository'),
+          description: esc(r.description || 'No description yet. Have a look at the code on GitHub!'),
+          tags: (r.topics && r.topics.length ? r.topics : [r.language].filter(Boolean)).slice(0, 3).map(esc),
+          link: r.html_url,
+        }));
+    }
+
+    /** Reads <item>s from RSS XML text */
+    function parseRssXml(xml) {
+      const doc = new DOMParser().parseFromString(xml, 'text/xml');
+      if (doc.querySelector('parsererror')) throw new Error('Invalid RSS feed');
+      const text = (el, tag) => el.getElementsByTagName(tag)[0]?.textContent || '';
+      return [...doc.getElementsByTagName('item')].map(el => ({
+        title: text(el, 'title'), link: text(el, 'link'), date: new Date(text(el, 'pubDate')),
+        description: text(el, 'description'), content: text(el, 'content:encoded'),
+      }));
+    }
+
+    /** RSS items → blog post objects used by the site */
+    function rssItemsToPosts(items, count) {
+      return items.slice(0, count || undefined).map(i => {
+        const html = sanitizeHtml(i.content || i.description);
+        const text = stripTags(html);
+        const brief = stripTags(i.description) || text;
+        return {
+          id: (i.link || '').split('?')[0].replace(/\/+$/, '').split('/').pop(),
+          title: esc(i.title),
+          date: formatDate(i.date),
+          readTime: `${Math.max(1, Math.round(text.split(/\s+/).length / 200))} min read`,
+          snippet: esc(brief.length > 180 ? brief.slice(0, 177) + '…' : brief),
+          content: html,
+          url: i.link,
+        };
+      });
+    }
+
+    async function okFetch(url) {
+      const res = await timedFetch(url);
+      if (!res.ok) throw new Error(`${new URL(url).hostname} responded ${res.status}`);
+      return res;
+    }
+
+    /** Medium via its public RSS feed. Browsers block direct access to Medium's feed, so this goes through free RSS-to-JSON proxies. */
+    async function fetchMediumPosts({ username, count }) {
+      const feed = `https://medium.com/feed/@${username}`;
+      const enc = encodeURIComponent(feed);
+      const routes = [
+        async () => {                                                                                  // 1. rss2json.com
+          const j = await (await okFetch(`https://api.rss2json.com/v1/api.json?rss_url=${enc}`)).json();
+          if (j.status !== 'ok') throw new Error(j.message || 'rss2json could not read the feed');
+          return j.items.map(i => ({ title: i.title, link: i.link, date: new Date((i.pubDate || '').replace(' ', 'T') + 'Z'), description: i.description, content: i.content }));
+        },
+        async () => parseRssXml(await (await okFetch(`https://api.allorigins.win/raw?url=${enc}`)).text()), // 2. allorigins.win
+      ];
+      let lastError = new Error('Feed had no posts');
+      for (const route of routes) {
+        try { const items = await route(); if (items.length) return rssItemsToPosts(items, count); }
+        catch (e) { lastError = e; }
+      }
+      throw lastError;
+    }
+
+    /** Loads GitHub + Medium in the background. The page shows immediately and updates as each one arrives. */
+    function loadRemoteContent() {
+      const { github, medium } = SITE;
+
+      const load = async (key, enabled, cacheKey, loader, apply, emptyMsg) => {
+        if (!enabled) return;
+        LOADING[key] = true;
+        try {
+          const data = await cached(cacheKey, loader);
+          if (data.length) apply(data); else LOAD_ERRORS[key] = emptyMsg;
+        } catch (e) {
+          LOAD_ERRORS[key] = e?.message || String(e);
+          console.warn(`${key} load failed:`, e);
+        } finally {
+          LOADING[key] = false;
+          route(false);   // re-draw the current page without jumping to the top
+        }
+      };
+
+      load('github', !!github.username, `gh:${github.username}:${github.count}:${github.skipForks}`,
+           () => fetchGithubProjects(github), d => { PROJECTS = d; }, 'No public repositories found for this username.');
+      load('medium', !!medium.username, `md1:${medium.username}:${medium.count}`,
+           () => fetchMediumPosts(medium), d => { BLOGS = d; }, 'No published posts found on this Medium profile.');
+    }
+  </script>
+
+
+  <!-- ==========================================================================
+       3. UI COMPONENTS   (reusable building blocks — edit to change the look)
+       ========================================================================== -->
+  <script>
+    const ICONS = {
+      external: 'M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14',
+      arrow:    'M17 8l4 4m0 0l-4 4m4-4H3',
+      back:     'M10 19l-7-7m0 0l7-7m-7 7h18',
+      download: 'M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4',
+    };
+
+    const icon = (name, extra = '') => `
+      <svg class="w-4 h-4 ${extra}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${ICONS[name]}"></path>
+      </svg>`;
+
+    const tag = (text) =>
+      `<span class="text-[11px] uppercase tracking-wider font-semibold px-2 py-1 bg-stone-100 text-stone-500 rounded">${text}</span>`;
+
+    const divider = () => `<div class="w-full h-px bg-stone-200 mb-20"></div>`;
+
+    /** Section heading with optional "view all" link (used on Home) */
+    const sectionHeader = ({ title, subtitle }, linkHref, linkLabel) => `
+      <div class="flex justify-between items-end mb-10">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight text-stone-900 mb-2">${title}</h2>
+          <p class="text-stone-500">${subtitle}</p>
+        </div>
+        ${linkHref ? `<a href="${linkHref}" class="hidden md:inline-flex text-sm font-medium text-stone-900 hover-underline pb-0.5">${linkLabel}</a>` : ''}
+      </div>`;
+
+    /** Page heading (used on Projects / Blog pages) */
+    const pageHeader = ({ title, subtitle }) => `
+      <header class="mb-16 max-w-3xl">
+        <h1 class="text-3xl font-bold tracking-tight text-stone-900 mb-4">${title}</h1>
+        <p class="text-stone-500 text-lg">${subtitle}</p>
+      </header>`;
+
+    /** Project card. `large` = roomier padding for the Projects page */
+    const projectCard = (p, large = false) => `
+      <div class="group border border-stone-200 bg-card rounded-lg ${large ? 'p-8' : 'p-6'} hover:shadow-sm hover:border-stone-300 transition-all duration-300 flex flex-col h-full">
+        <div class="flex justify-between items-start ${large ? 'mb-6' : 'mb-4'}">
+          <span class="text-xs font-semibold uppercase tracking-widest text-stone-400">${p.category}</span>
+          <a href="${p.link}" target="_blank" class="text-stone-400 hover:text-stone-900 transition-colors">${icon('external', '!w-5 !h-5')}</a>
+        </div>
+        <h3 class="${large ? 'text-xl mb-3' : 'text-lg mb-2'} font-semibold text-stone-900 group-hover:text-stone-600 transition-colors">${p.title}</h3>
+        <p class="text-stone-600 text-sm leading-relaxed ${large ? 'mb-8' : 'mb-6'} flex-grow">${p.description}</p>
+        <div class="flex flex-wrap gap-2 mt-auto">${p.tags.map(tag).join('')}</div>
+      </div>`;
+
+    /** Blog list item. `large` = bigger type for the Blog page */
+    const blogCard = (b, large = false) => `
+      <article class="group ${large ? 'mb-14' : 'mb-10'} cursor-pointer" onclick="location.hash='#post/${b.id}'">
+        <div class="flex items-center gap-3 text-xs uppercase tracking-wider font-semibold text-stone-400 mb-${large ? 3 : 2}">
+          <time>${b.date}</time><span>&middot;</span><span>${b.readTime}</span>
+        </div>
+        <h3 class="${large ? 'text-2xl mb-3' : 'text-xl mb-2'} font-bold text-stone-900 group-hover:text-stone-600 transition-colors">${b.title}</h3>
+        <p class="text-stone-600 font-serif ${large ? 'text-lg mb-4' : 'text-base mb-3'} leading-relaxed">${b.snippet}</p>
+        <span class="text-stone-900 font-medium text-sm inline-flex items-center gap-1 hover-underline pb-0.5">
+          Read Article ${icon('arrow', 'transition-transform group-hover:translate-x-1')}
+        </span>
+      </article>`;
+
+    /** All social links + email, in display order (used in Home and footer) */
+    const allSocials = () => [...PROFILE.socials, { name: 'Email', url: `mailto:${PROFILE.email}` }];
+
+    /** Friendly message shown if a list is empty (e.g. the GitHub / Medium request failed) */
+    const emptyNote = (what, url, label, reason) =>
+      `<p class="md:col-span-2 text-stone-500">Couldn't load ${what} right now. <a href="${url}" target="_blank" rel="noopener" class="text-stone-900 hover-underline pb-0.5">${label}</a>
+        ${reason ? `<span class="block text-xs text-stone-400 mt-1">Reason: ${esc(reason)}</span>` : ''}</p>`;
+    const loadingNote = (what) => `<p class="md:col-span-2 text-stone-400">Loading ${what}…</p>`;
+    const noProjects = () => LOADING.github ? loadingNote('projects') : emptyNote('projects', `https://github.com/${SITE.github.username}`, 'See them on GitHub →', LOAD_ERRORS.github);
+    const noPosts = () => LOADING.medium ? loadingNote('posts') : emptyNote('posts', `https://medium.com/@${SITE.medium.username}`, 'Read them on Medium →', LOAD_ERRORS.medium);
+
+    const resumeLabel = (text) =>
+      `<h2 class="text-xs uppercase tracking-widest text-stone-400 font-semibold mb-6">${text}</h2>`;
+  </script>
+
+
+  <!-- ==========================================================================
+       4. VIEWS   (one function per page)
+       ========================================================================== -->
+  <script>
+    const VIEWS = {
+
+      home() {
+        const projects = PROJECTS.slice(0, SITE.homeProjectCount).map(p => projectCard(p)).join('');
+        const blogs = BLOGS.slice(0, SITE.homeBlogCount).map(b => blogCard(b)).join('');
+
+        return `
+          <div class="max-w-4xl mx-auto animate-fade-in mt-12 md:mt-20">
+
+            <section class="mb-24">
+              <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-stone-900 mb-6 leading-tight">
+                Hi, I'm ${PROFILE.name}.<br>
+                <span class="text-stone-400 font-normal">${PROFILE.title}</span>
+              </h1>
+              ${PROFILE.tagline ? `<p class="text-xl md:text-2xl text-stone-600 leading-relaxed font-serif mb-8">${PROFILE.tagline}</p>` : ''}
+              <p class="text-lg text-stone-600 leading-relaxed mb-10 max-w-2xl">${PROFILE.about}</p>
+              <div class="flex flex-wrap items-center gap-6">
+                <a href="${RESUME.pdfLink}" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-6 py-3 bg-stone-900 text-stone-50 font-medium rounded-md hover:bg-stone-800 transition-colors shadow-sm">View Resume</a>
+                <a href="mailto:${PROFILE.email}" class="inline-flex items-center gap-2 text-stone-900 font-medium hover:opacity-70 transition-opacity">Say hello ${icon('arrow')}</a>
+              </div>
+            </section>
+
+            ${divider()}
+
+            <section class="mb-24">
+              ${sectionHeader(SITE.text.homeProjects, '#projects', 'View all projects')}
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${projects || noProjects()}</div>
+            </section>
+
+            ${divider()}
+
+            <section>
+              ${sectionHeader(SITE.text.homeBlog, '#blog', 'View all posts')}
+              <div class="max-w-3xl">${blogs || noPosts()}</div>
+            </section>
+          </div>`;
+      },
+
+      projects() {
+        return `
+          <div class="max-w-5xl mx-auto animate-fade-in mt-8">
+            ${pageHeader(SITE.text.projectsPage)}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${PROJECTS.map(p => projectCard(p, true)).join('') || noProjects()}</div>
+          </div>`;
+      },
+
+      resume() {
+        const skills = RESUME.skills.map(s => `
+          <div class="mb-6">
+            <h4 class="text-sm font-semibold text-stone-900 mb-2">${s.category}</h4>
+            <p class="text-sm text-stone-600 leading-relaxed">${s.items}</p>
+          </div>`).join('');
+
+        const education = RESUME.education.map(e => `
+          <div class="mb-8">
+            <div class="md:flex justify-between items-baseline mb-2">
+              <h3 class="text-base font-semibold text-stone-900">${e.degree}</h3>
+              <span class="text-sm text-stone-400 font-medium">${e.period}</span>
+            </div>
+            <h4 class="text-stone-500 text-sm">${e.institution}</h4>
+          </div>`).join('');
+
+        const experience = RESUME.experience.map(x => `
+          <div class="mb-12">
+            <div class="md:flex justify-between items-baseline mb-2">
+              <h3 class="text-lg font-semibold text-stone-900">${x.role}</h3>
+              <span class="text-sm text-stone-400 font-medium block md:inline mt-1 md:mt-0">${x.period}</span>
+            </div>
+            <h4 class="text-stone-500 font-medium mb-4">${x.company}</h4>
+            <p class="text-stone-600 text-sm leading-relaxed">${x.description}</p>
+          </div>`).join('');
+
+        return `
+          <div class="max-w-3xl mx-auto animate-fade-in mt-8">
+            <header class="mb-16">
+              <div class="flex justify-between items-end mb-4">
+                <h1 class="text-3xl font-bold tracking-tight text-stone-900">${SITE.text.resumePage.title}</h1>
+                <a href="${RESUME.pdfLink}" target="_blank" class="text-sm font-medium text-stone-500 hover:text-stone-900 hover-underline pb-0.5 inline-flex items-center gap-2">
+                  Download PDF ${icon('download')}
+                </a>
+              </div>
+              <p class="text-stone-600 font-serif text-lg leading-relaxed">${RESUME.summary}</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div class="md:col-span-1 order-2 md:order-1">
+                <section class="mb-12">${resumeLabel('Skills')}${skills}</section>
+                <section>${resumeLabel('Education')}${education}</section>
+              </div>
+              <div class="md:col-span-2 order-1 md:order-2">
+                <section>${resumeLabel('Work History')}${experience}</section>
+              </div>
+            </div>
+          </div>`;
+      },
+
+      blog() {
+        return `
+          <div class="max-w-3xl mx-auto animate-fade-in mt-8">
+            ${pageHeader(SITE.text.blogPage)}
+            <div class="mt-8">${BLOGS.map(b => blogCard(b, true)).join('') || noPosts()}</div>
+          </div>`;
+      },
+
+      post(id) {
+        const b = BLOGS.find(post => post.id === id);
+        if (!b) return `
+          <div class="max-w-3xl mx-auto text-center mt-24">
+            <h1 class="text-2xl font-bold text-stone-900 mb-4">Article not found.</h1>
+            <a href="#blog" class="text-stone-500 hover:text-stone-900 hover-underline pb-0.5">Back to writing</a>
+          </div>`;
+
+        return `
+          <div class="max-w-2xl mx-auto animate-fade-in mt-4 md:mt-8">
+            <a href="#blog" class="inline-flex items-center gap-2 text-stone-400 hover:text-stone-900 transition-colors mb-12 text-sm font-medium">
+              ${icon('back')} Back to Writing
+            </a>
+            <article>
+              <header class="mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-stone-900 mb-6 leading-tight">${b.title}</h1>
+                <div class="flex items-center gap-3 text-stone-400 text-sm font-medium uppercase tracking-wider">
+                  <time>${b.date}</time><span>&middot;</span><span>${b.readTime}</span>
+                </div>
+              </header>
+              <div class="prose w-full max-w-none text-lg font-serif">${b.content}</div>
+            </article>
+            ${b.url ? `<p class="mt-16 text-center text-sm"><a href="${b.url}" target="_blank" rel="noopener" class="text-stone-500 hover:text-stone-900 hover-underline pb-0.5">Read or comment on Medium ${icon('external', 'inline')}</a></p>` : ''}
+            <div class="mt-12 w-12 h-px bg-stone-300 mx-auto"></div>
+          </div>`;
+      },
+    };
+  </script>
+
+
+  <!-- ==========================================================================
+       5. ROUTER & BOOTSTRAP   (you shouldn't need to touch this)
+       ========================================================================== -->
+  <script>
+    const app = document.getElementById('app');
+
+    function renderChrome() {
+      document.getElementById('footer-name').textContent = PROFILE.name;
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+      document.getElementById('nav-links').innerHTML = SITE.nav.map(n =>
+        `<a href="#${n.route}" data-route="${n.route}" class="hover:text-stone-900 transition-colors pb-1">${n.label}</a>`
+      ).join('');
+
+      document.getElementById('footer-socials').innerHTML = allSocials().map(s =>
+        `<a href="${s.url}" target="_blank" rel="noopener" class="hover:text-stone-900 transition-colors hover-underline pb-0.5">${s.name}</a>`
+      ).join('');
+    }
+
+    function route(scrollTop = true) {
+      const hash = location.hash || '#home';
+      const [page, param] = hash.slice(1).split('/');   // "#post/my-id" → ["post", "my-id"]
+      const view = VIEWS[page] ? page : 'home';
+
+      app.innerHTML = VIEWS[view](param);
+
+      // Highlight active nav link (blog posts count as "blog")
+      const activeRoute = view === 'post' ? 'blog' : view;
+      document.querySelectorAll('#nav-links a').forEach(a =>
+        a.classList.toggle('nav-active', a.dataset.route === activeRoute)
+      );
+
+      if (scrollTop) window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function initThemeToggle() {
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        const dark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      console.info('Portfolio build 2026-09-30 v7');
+      renderChrome();
+      initThemeToggle();
+      window.addEventListener('hashchange', () => route());
+      loadRemoteContent();   // starts in the background
+      route();               // page appears straight away
+    });
+  </script>
+</body>
+</html>
