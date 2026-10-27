@@ -273,6 +273,35 @@
         }));
     }
 
+    /** DEV.to's public API returns article details when you fetch a single post by slug or id. */
+    async function fetchDevToArticle({ slug, id }) {
+      const key = id || slug;
+      if (key === undefined || key === null || key === '') throw new Error('No DEV.to article key provided');
+
+      const url = `https://dev.to/api/articles/${encodeURIComponent(String(key))}`;
+      const res = await timedFetch(url);
+      if (!res.ok) throw new Error(`DEV.to responded ${res.status}`);
+      const article = await res.json();
+      if (!article || typeof article !== 'object') throw new Error('DEV.to returned an invalid article response');
+
+      const articleUrl = new URL(article.url || `https://dev.to/${article.username || SITE.devto.username}/${article.slug}`);
+      if (articleUrl.protocol !== 'https:' || articleUrl.hostname !== 'dev.to') {
+        throw new Error('DEV.to returned an invalid article URL');
+      }
+
+      return {
+        id: article.id,
+        slug: article.slug,
+        title: esc(article.title),
+        date: formatDate(new Date(article.published_at)),
+        readTime: `${Math.max(1, Number(article.reading_time_minutes) || 1)} min read`,
+        snippet: esc(article.description || 'Read the full article on DEV.to.'),
+        tags: Array.isArray(article.tag_list) ? article.tag_list.slice(0, 3).map(esc) : [],
+        url: articleUrl.href,
+        content: article.body_html || '',
+      };
+    }
+
     /** DEV.to's public API returns the latest published articles for a username. */
     async function fetchDevToPosts({ username, count }) {
       const params = new URLSearchParams({ username, per_page: '100' });
@@ -289,12 +318,15 @@
             throw new Error('DEV.to returned an invalid article URL');
           }
           return {
+            id: article.id,
+            slug: article.slug,
             title: esc(article.title),
             date: formatDate(new Date(article.published_at)),
             readTime: `${Math.max(1, Number(article.reading_time_minutes) || 1)} min read`,
             snippet: esc(article.description || 'Read the full article on DEV.to.'),
             tags: Array.isArray(article.tag_list) ? article.tag_list.slice(0, 3).map(esc) : [],
             url: articleUrl.href,
+            content: '',
           };
         });
     }
@@ -377,19 +409,27 @@
       </div>`;
 
     /** Blog list item. `large` = bigger type for the Blog page */
-    const blogCard = (b, large = false) => `
-      <article class="group ${large ? 'mb-14' : 'mb-10'}">
-        <div class="flex items-center gap-3 text-xs uppercase tracking-wider font-semibold text-stone-400 mb-${large ? 3 : 2}">
-          <time>${b.date}</time><span>&middot;</span><span>${b.readTime}</span>
-        </div>
-        <h3 class="${large ? 'text-2xl mb-3' : 'text-xl mb-2'} font-bold text-stone-900 group-hover:text-stone-600 transition-colors">
-          <a href="${esc(b.url)}" target="_blank" rel="noopener">${b.title}</a>
-        </h3>
-        <p class="text-stone-600 font-serif ${large ? 'text-lg mb-4' : 'text-base mb-3'} leading-relaxed">${b.snippet}</p>
-        <a href="${esc(b.url)}" target="_blank" rel="noopener" class="text-stone-900 font-medium text-sm inline-flex items-center gap-1 hover-underline pb-0.5">
-          Read on DEV.to ${icon('arrow', 'transition-transform group-hover:translate-x-1')}
-        </a>
-      </article>`;
+    const blogCard = (b, large = false) => {
+      const postLink = `#post/${encodeURIComponent(String(b.id ?? b.slug ?? ''))}`;
+      return `
+        <article class="group ${large ? 'mb-14' : 'mb-10'}">
+          <div class="flex items-center gap-3 text-xs uppercase tracking-wider font-semibold text-stone-400 mb-${large ? 3 : 2}">
+            <time>${b.date}</time><span>&middot;</span><span>${b.readTime}</span>
+          </div>
+          <h3 class="${large ? 'text-2xl mb-3' : 'text-xl mb-2'} font-bold text-stone-900 group-hover:text-stone-600 transition-colors">
+            <a href="${postLink}">${b.title}</a>
+          </h3>
+          <p class="text-stone-600 font-serif ${large ? 'text-lg mb-4' : 'text-base mb-3'} leading-relaxed">${b.snippet}</p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="${postLink}" class="text-stone-900 font-medium text-sm inline-flex items-center gap-1 hover-underline pb-0.5">
+              Read article ${icon('arrow', 'transition-transform group-hover:translate-x-1')}
+            </a>
+            <a href="${esc(b.url)}" target="_blank" rel="noopener" class="text-stone-500 font-medium text-sm inline-flex items-center gap-1 hover:text-stone-900 hover-underline pb-0.5">
+              Open on DEV.to ${icon('external', 'inline')}
+            </a>
+          </div>
+        </article>`;
+    };
 
     /** All social links + email, in display order (used in Home and footer) */
     const allSocials = () => [...PROFILE.socials, { name: 'Email', url: `mailto:${PROFILE.email}` }];
@@ -411,6 +451,34 @@
        4. VIEWS   (one function per page)
        ========================================================================== -->
   <script>
+    async function loadDevToPostDetail(postKey) {
+      const key = decodeURIComponent(postKey || '').trim();
+      if (!key) return;
+
+      const target = BLOGS.find(post => String(post.id) === key || post.slug === key);
+      if (!target) return;
+      if (target.content) return;
+
+      try {
+        const article = await fetchDevToArticle({ slug: target.slug, id: target.id });
+        BLOGS = BLOGS.map(post => {
+          if (String(post.id) === String(article.id) || post.slug === article.slug) {
+            return { ...post, ...article };
+          }
+          return post;
+        });
+        route(false);
+      } catch (e) {
+        LOAD_ERRORS.devto = e?.message || String(e);
+        const fallbackUrl = target.url || `https://dev.to/${SITE.devto.username}`;
+        BLOGS = BLOGS.map(post => post.id === target.id ? {
+          ...post,
+          content: `<p class="text-stone-600">Unable to load this article preview right now. <a href="${fallbackUrl}" target="_blank" rel="noopener" class="text-stone-900 hover-underline pb-0.5">Read it on DEV.to</a></p>`
+        } : post);
+        route(false);
+      }
+    }
+
     const VIEWS = {
 
       home() {
@@ -522,12 +590,34 @@
       },
 
       post(id) {
-        const b = BLOGS.find(post => post.id === id);
+        const key = decodeURIComponent(id || '').trim();
+        const b = BLOGS.find(post => String(post.id) === key || post.slug === key);
         if (!b) return `
           <div class="max-w-3xl mx-auto text-center mt-24">
             <h1 class="text-2xl font-bold text-stone-900 mb-4">Article not found.</h1>
             <a href="#blog" class="text-stone-500 hover:text-stone-900 hover-underline pb-0.5">Back to writing</a>
           </div>`;
+
+        if (!b.content) {
+          loadDevToPostDetail(key);
+          return `
+            <div class="max-w-2xl mx-auto animate-fade-in mt-4 md:mt-8">
+              <a href="#blog" class="inline-flex items-center gap-2 text-stone-400 hover:text-stone-900 transition-colors mb-12 text-sm font-medium">
+                ${icon('back')} Back to Writing
+              </a>
+              <article>
+                <header class="mb-12">
+                  <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-stone-900 mb-6 leading-tight">${b.title}</h1>
+                  <div class="flex items-center gap-3 text-stone-400 text-sm font-medium uppercase tracking-wider">
+                    <time>${b.date}</time><span>&middot;</span><span>${b.readTime}</span>
+                  </div>
+                </header>
+                <div class="prose w-full max-w-none text-lg font-serif">
+                  <p class="text-stone-500">Loading article preview…</p>
+                </div>
+              </article>
+            </div>`;
+        }
 
         return `
           <div class="max-w-2xl mx-auto animate-fade-in mt-4 md:mt-8">
